@@ -1,14 +1,14 @@
 {
-  "name": "search/sphinxsearch-bundle",
+  "name": "tear/sphinxsearch-bundle",
   "type": "symfony-bundle",
   "description": "Sphinx search bundle for Symfony 2",
   "keywords": ["sphinx", "sphinxsearch", "symfony2"],
-  "homepage": "https://github.com/timewasted/Search-SphinxsearchBundle",
-  "license": "BSD-2-Clause",
+  "homepage": "https://github.com/leonnleite/Tear-SphinxsearchBundle",
+  "license": "MIT",
   "authors": [
     {
-      "name": "Ryan Rogers",
-      "email": "ryan@timewasted.me"
+      "name": "Leonn Leite",
+      "email": "leonnleite@gmail.com"
     }
   ],
   "require": {
