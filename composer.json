@@ -16,8 +16,8 @@
   },
   "autoload": {
     "psr-0": {
-      "Search\\SphinxsearchBundle": ""
+      "Tear\\SphinxsearchBundle": ""
     }
   },
-  "target-dir": "Search/SphinxsearchBundle"
+  "target-dir": "Tear/SphinxsearchBundle"
 }

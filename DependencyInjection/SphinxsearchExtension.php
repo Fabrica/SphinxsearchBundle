@@ -1,6 +1,6 @@
 <?php
 
-namespace Search\SphinxsearchBundle\DependencyInjection;
+namespace Tear\SphinxsearchBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
@@ -42,6 +42,10 @@ class SphinxsearchExtension extends Extension
 			$container->setParameter('search.sphinxsearch.searchd.port', $config['searchd']['port']);
 			$container->setParameter('search.sphinxsearch.searchd.socket', $config['searchd']['socket']);
 		}
+                /**
+                 * this bundlePath
+                 */
+                $container->setParameter('search.sphinxsearch.bundlepath', $config['bundlePath']);
 	}
 
 	public function getAlias()

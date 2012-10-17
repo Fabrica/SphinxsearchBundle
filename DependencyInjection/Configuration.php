@@ -1,6 +1,6 @@
 <?php
 
-namespace Search\SphinxsearchBundle\DependencyInjection;
+namespace Tear\SphinxsearchBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -8,61 +8,96 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-	/**
-	 * Generates the configuration tree.
-	 *
-	 * @return TreeBuilder
-	 */
-	public function getConfigTreeBuilder()
-	{
-		$treeBuilder = new TreeBuilder();
-		$rootNode = $treeBuilder->root('sphinxsearch');
+    /**
+     *
+     * @var ArrayNodeDefinition
+     */
+    private $node;
+    
+    /**
+    * Generates the configuration tree.
+    *
+    * @return TreeBuilder
+    */
+    public function getConfigTreeBuilder()
+    {
+            $treeBuilder = new TreeBuilder();
+            $this->setNode($treeBuilder->root('sphinxsearch'));
+            
+            $this->addIndexerSection();
+            $this->addIndexesSection();
+            $this->addSearchdSection();
+            $this->addBundlePath();
+            
+            return $treeBuilder;
+    }
 
-		$this->addIndexerSection($rootNode);
-		$this->addIndexesSection($rootNode);
-		$this->addSearchdSection($rootNode);
+    private function addIndexerSection()
+    {
+            $this->getNode()
+                    ->children()
+                            ->arrayNode('indexer')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                            ->scalarNode('bin')->defaultValue('/usr/bin/indexer')->end()
+                                    ->end()
+                            ->end()
+                    ->end();
+    }
 
-		return $treeBuilder;
-	}
+    private function addIndexesSection()
+    {
+            $this->getNode()
+                    ->children()
+                            ->arrayNode('indexes')
+                                    ->isRequired()
+                                    ->requiresAtLeastOneElement()
+                                    ->useAttributeAsKey('key')
+                                    ->prototype('scalar')->end()
+                            ->end()
+                    ->end();
+    }
 
-	private function addIndexerSection(ArrayNodeDefinition $node)
-	{
-		$node
-			->children()
-				->arrayNode('indexer')
-					->addDefaultsIfNotSet()
-					->children()
-						->scalarNode('bin')->defaultValue('/usr/bin/indexer')->end()
-					->end()
-				->end()
-			->end();
-	}
+    private function addSearchdSection()
+    {
+            $this->getNode()
+                    ->children()
+                            ->arrayNode('searchd')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                            ->scalarNode('host')->defaultValue('localhost')->end()
+                                            ->scalarNode('port')->defaultValue('9312')->end()
+                                            ->scalarNode('socket')->defaultNull()->end()
+                                    ->end()
+                            ->end()
+                    ->end();
+    }
+    
+    private function addBundlePath(){
+        $this->getNode()
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('bundlePath')->defaultValue(realpath(__DIR__ . '/..'))->end()
+                ->end();
+    }
+    /**
+     *
+     * @return ArrayNodeDefinition 
+     */
+    public function getNode() 
+    {
+        return $this->node;
+    }
+    /**
+     *
+     * @param ArrayNodeDefinition $node
+     * @return \Tear\SphinxsearchBundle\DependencyInjection\Configuration 
+     */
+    public function setNode(ArrayNodeDefinition $node) 
+    {
+        $this->node = $node;
+        return $this;
+    }
 
-	private function addIndexesSection(ArrayNodeDefinition $node)
-	{
-		$node
-			->children()
-				->arrayNode('indexes')
-					->isRequired()
-					->requiresAtLeastOneElement()
-					->useAttributeAsKey('key')
-					->prototype('scalar')->end()
-				->end()
-			->end();
-	}
 
-	private function addSearchdSection(ArrayNodeDefinition $node)
-	{
-		$node
-			->children()
-				->arrayNode('searchd')
-					->addDefaultsIfNotSet()
-					->children()
-						->scalarNode('host')->defaultValue('localhost')->end()
-						->scalarNode('port')->defaultValue('9312')->end()
-						->scalarNode('socket')->defaultNull()->end()
-					->end()
-				->end()
-			->end();
-	}
 }
