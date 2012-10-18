@@ -17,7 +17,7 @@ This can be done in two different ways:
     "require": {
         "php": ">=5.3.2",
         // ...
-        "tear/respect-validation-bundle": "dev-master",
+        "tear/sphinxsearch-bundle": "dev-master",
         // ...
     }
 
