@@ -28,6 +28,22 @@ This can be done in two different ways:
     git submodule add git://github.com/delocker/SphinxsearchBundle.git vendor/delocker/sphinxsearch-bundle
 
 
+**Enable the bundle** in the kernel:
+
+``` php
+<?php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new FOS\UserBundle\FOSUserBundle(),
+    );
+}
+```
+
+
 Configuration:
 ==============
 
