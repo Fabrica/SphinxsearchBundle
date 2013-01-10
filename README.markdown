@@ -1,4 +1,4 @@
-About Tear-SphinxsearchBundle
+About SphinxsearchBundle
 ========================
 Sphinx search bundle for Symfony 2
 
@@ -17,7 +17,7 @@ This can be done in two different ways:
     "require": {
         "php": ">=5.3.2",
         // ...
-        "tear/sphinxsearch-bundle": "dev-master",
+        "delocker/sphinxsearch-bundle": "dev-master",
         // ...
     }
 
@@ -25,7 +25,7 @@ This can be done in two different ways:
 **Second Way** : git command
 
 
-    git submodule add git://github.com/leonnleite/Tear-SphinxsearchBundle.git vendor/tear/sphinxsearch-bundle
+    git submodule add git://github.com/delocker/SphinxsearchBundle.git vendor/delocker/sphinxsearch-bundle
 
 
 Configuration:
