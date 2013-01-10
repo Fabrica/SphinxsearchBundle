@@ -17,7 +17,7 @@
         </service>
 
         <service id="search.sphinxsearch.search" class="%search.sphinxsearch.search.class%">
-            <file>%kernel.root_dir%/../vendor/delocker/sphinxsearch-bundle/Services/Search/SphinxAPI.php</file>
+            <file>%kernel.root_dir%/../vendor/delocker/sphinxsearch-bundle/Delocker/SphinxsearchBundle/Services/Search/SphinxAPI.php</file>
             <argument>%search.sphinxsearch.searchd.host%</argument>
             <argument>%search.sphinxsearch.searchd.port%</argument>
             <argument>%search.sphinxsearch.searchd.socket%</argument>
