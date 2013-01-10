@@ -1,6 +1,6 @@
 <?php
 
-namespace Tear\SphinxsearchBundle;
+namespace Delocker\SphinxsearchBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
