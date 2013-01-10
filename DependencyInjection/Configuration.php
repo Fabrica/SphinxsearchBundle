@@ -13,7 +13,7 @@ class Configuration implements ConfigurationInterface
      * @var ArrayNodeDefinition
      */
     private $node;
-    
+
     /**
     * Generates the configuration tree.
     *
@@ -23,12 +23,12 @@ class Configuration implements ConfigurationInterface
     {
             $treeBuilder = new TreeBuilder();
             $this->setNode($treeBuilder->root('sphinxsearch'));
-            
+
             $this->addIndexerSection();
             $this->addIndexesSection();
             $this->addSearchdSection();
             $this->addBundlePath();
-            
+
             return $treeBuilder;
     }
 
@@ -39,16 +39,16 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('indexer')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('bin')->defaultValue('/usr/bin/indexer')->end()
-                        ->scalarNode('conf')->defaultValue('/usr/bin/indexer')->end()
+                        ->scalarNode('bin')->defaultValue('/usr/local/sphinx/bin/indexer')->end()
+                        ->scalarNode('conf')->defaultValue('/usr/local/sphinx/etc/sphinx.conf')->end()
                     ->end()
                 ->end()
             ->end();
     }
 
-    private function addIndexesSection(ArrayNodeDefinition $node)
+    private function addIndexesSection()
     {
-        $node
+        $this->getNode()
             ->children()
                 ->arrayNode('indexes')
                     ->isRequired()
@@ -77,7 +77,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
     }
-    
+
     private function addBundlePath(){
         $this->getNode()
             ->addDefaultsIfNotSet()
@@ -87,9 +87,9 @@ class Configuration implements ConfigurationInterface
     }
     /**
      *
-     * @return ArrayNodeDefinition 
+     * @return ArrayNodeDefinition
      */
-    public function getNode() 
+    public function getNode()
     {
         return $this->node;
     }
@@ -98,7 +98,7 @@ class Configuration implements ConfigurationInterface
      * @param ArrayNodeDefinition $node
      * @return \Delocker\SphinxsearchBundle\DependencyInjection\Configuration
      */
-    public function setNode(ArrayNodeDefinition $node) 
+    public function setNode(ArrayNodeDefinition $node)
     {
         $this->node = $node;
         return $this;

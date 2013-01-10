@@ -51,15 +51,32 @@ Configuration:
     // app/config/config.yml
     sphinxsearch:
         indexes:
-            indexName: %sphinxsearch_index_indexName%
-            indexNameTwo:      %sphinxsearch_index_indexNameTwo%
-    searchd:
-        host:   %sphinxsearch_host%
-        port:   %sphinxsearch_port%
-        socket: %sphinxsearch_socket%
-    indexer:
-        bin:    %sphinxsearch_indexer_bin%
-        conf:   %sphinxsearch_indexer_conf%
+            indexName:
+                index_name: %sphinxsearch_index_indexName%
+            indexNameTwo:
+                index_name: %sphinxsearch_index_indexNameTwo%
+        searchd:
+            host:   %sphinxsearch_host%
+            port:   %sphinxsearch_port%
+            socket: %sphinxsearch_socket%
+        indexer:
+            bin:    %sphinxsearch_indexer_bin%
+            conf:   %sphinxsearch_indexer_conf%
+
+    **For example**
+    sphinxsearch:
+        indexes:
+            test1:
+                index_name: test1
+            testrt:
+                index_name: testrt
+        searchd:
+            host:   localhost
+            port:   9312
+            socket: ~
+        indexer:
+            bin:    /usr/local/sphinx/bin/indexer
+            conf:   /usr/local/sphinx/etc/sphinx.conf
 
 
 

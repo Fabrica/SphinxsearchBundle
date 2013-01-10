@@ -172,8 +172,14 @@ class Sphinxsearch
 			/**
 			 * Set the offset and limit for the returned results.
 			 */
-			if( isset($options['result_offset']) && isset($options['result_limit']) )
+			if( isset($options['result_limit']) )
+            {
+                if ( !isset($options['result_offset']) )
+                {
+                    $options['result_offset'] = 0;
+                }
 				$this->sphinx->setLimits($options['result_offset'], $options['result_limit']);
+            }
 
 			/**
 			 * Weight the individual fields.
@@ -184,7 +190,7 @@ class Sphinxsearch
 			/**
 			 * Perform the query.
 			 */
-			$results[$label] = $this->sphinx->query($query, $this->indexes[$label]);
+			$results[$label] = $this->sphinx->query($query, $label);
 			if( $results[$label]['status'] !== SEARCHD_OK )
 				throw new \RuntimeException(sprintf('Searching index "%s" for "%s" failed with error "%s".', $label, $query, $this->sphinx->getLastError()));
 		}

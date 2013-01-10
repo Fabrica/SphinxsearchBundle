@@ -12,6 +12,7 @@ v1.2.2
 * Getting sphinx object getSphinx()
 * Changed default bin path for indexer. /usr/local/sphinx/bin/indexer, instead on /usr/bin/indexer
 * Changed default path to config file as /usr/local/sphinx/etc/sphinx.conf
+* Added default offset for limit is 0
 
 v1.2.1
 ------
