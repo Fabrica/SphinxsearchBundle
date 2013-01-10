@@ -1,6 +1,6 @@
 <?php
 
-namespace Tear\SphinxsearchBundle\Services\Search;
+namespace Delocker\SphinxsearchBundle\Services\Search;
 
 class Sphinxsearch
 {
@@ -25,14 +25,14 @@ class Sphinxsearch
 	 * $this->indexes should look like:
 	 *
 	 * $this->indexes = array(
-	 *   'IndexLabel' => 'Index name as defined in sphinxsearch.conf',
+	 *   'IndexLabel' => array("index_name" => 'Index name as defined in sphinx.conf'),
 	 *   ...,
 	 * );
 	 */
 	private $indexes;
 
 	/**
-	 * @var SphinxClient $sphinx
+	 * @var \SphinxClient $sphinx
 	 */
 	private $sphinx;
 
@@ -70,6 +70,17 @@ class Sphinxsearch
 		return $this->sphinx->escapeString($string);
 	}
 
+    /**
+     * Set group by
+     * @param $attribute
+     * @param $func
+     * @param null $groupsort
+     */
+    public function setGroupBy($attribute, $func, $groupsort = null)
+    {
+        $this->sphinx->SetGroupBy($attribute, $func, $groupsort);
+    }
+
 	/**
 	 * Set the desired match mode.
 	 *
@@ -79,6 +90,37 @@ class Sphinxsearch
 	{
 		$this->sphinx->setMatchMode($mode);
 	}
+
+    /**
+     * Set the desired sort mode
+     * @param $mode
+     * @param $str
+     */
+    public function setSortMode($mode, $str) {
+        $this->sphinx->setSortMode($mode, $str);
+    }
+
+    /**
+     * Set filter float range
+     * @param $attribute
+     * @param $min
+     * @param $max
+     * @param bool $exclude
+     */
+    public function setFilterFloatRange($attribute, $min, $max, $exclude = false) {
+        $this->sphinx->SetFilterFloatRange($attribute, $min, $max, $exclude);
+    }
+
+    /**
+     * Set geo
+     * @param $attrlat
+     * @param $attrlong
+     * @param $lat
+     * @param $long
+     */
+    public function setGeoAnchor($attrlat, $attrlong, $lat, $long) {
+        $this->sphinx->SetGeoAnchor($attrlat, $attrlong, $lat, $long);
+    }
 
 	/**
 	 * Set the desired search filter.
@@ -158,4 +200,12 @@ class Sphinxsearch
 		 */
 		return $results;
 	}
+
+    /**
+     * @return \SphinxClient
+     */
+    public function getSphinx()
+    {
+        return $this->sphinx;
+    }
 }

@@ -43,6 +43,7 @@ Configuration:
         socket: %sphinxsearch_socket%
     indexer:
         bin:    %sphinxsearch_indexer_bin%
+        conf:   %sphinxsearch_indexer_conf%
 
 
 

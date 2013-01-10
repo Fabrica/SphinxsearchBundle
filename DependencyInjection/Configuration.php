@@ -1,6 +1,6 @@
 <?php
 
-namespace Tear\SphinxsearchBundle\DependencyInjection;
+namespace Delocker\SphinxsearchBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -34,51 +34,56 @@ class Configuration implements ConfigurationInterface
 
     private function addIndexerSection()
     {
-            $this->getNode()
+        $this->getNode()
+            ->children()
+                ->arrayNode('indexer')
+                    ->addDefaultsIfNotSet()
                     ->children()
-                            ->arrayNode('indexer')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                            ->scalarNode('bin')->defaultValue('/usr/bin/indexer')->end()
-                                    ->end()
-                            ->end()
-                    ->end();
+                        ->scalarNode('bin')->defaultValue('/usr/bin/indexer')->end()
+                        ->scalarNode('conf')->defaultValue('/usr/bin/indexer')->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 
-    private function addIndexesSection()
+    private function addIndexesSection(ArrayNodeDefinition $node)
     {
-            $this->getNode()
-                    ->children()
-                            ->arrayNode('indexes')
-                                    ->isRequired()
-                                    ->requiresAtLeastOneElement()
-                                    ->useAttributeAsKey('key')
-                                    ->prototype('scalar')->end()
-                            ->end()
-                    ->end();
+        $node
+            ->children()
+                ->arrayNode('indexes')
+                    ->isRequired()
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('key')
+                    ->prototype("array")
+                        ->children()
+                            ->scalarNode("index_name")->isRequired()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 
     private function addSearchdSection()
     {
-            $this->getNode()
+        $this->getNode()
+            ->children()
+                ->arrayNode('searchd')
+                    ->addDefaultsIfNotSet()
                     ->children()
-                            ->arrayNode('searchd')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                            ->scalarNode('host')->defaultValue('localhost')->end()
-                                            ->scalarNode('port')->defaultValue('9312')->end()
-                                            ->scalarNode('socket')->defaultNull()->end()
-                                    ->end()
-                            ->end()
-                    ->end();
+                        ->scalarNode('host')->defaultValue('localhost')->end()
+                        ->scalarNode('port')->defaultValue('9312')->end()
+                        ->scalarNode('socket')->defaultNull()->end()
+                    ->end()
+                ->end()
+            ->end();
     }
     
     private function addBundlePath(){
         $this->getNode()
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->scalarNode('bundlePath')->defaultValue(realpath(__DIR__ . '/..'))->end()
-                ->end();
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('bundlePath')->defaultValue(realpath(__DIR__ . '/..'))->end()
+            ->end();
     }
     /**
      *
@@ -91,7 +96,7 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @param ArrayNodeDefinition $node
-     * @return \Tear\SphinxsearchBundle\DependencyInjection\Configuration 
+     * @return \Delocker\SphinxsearchBundle\DependencyInjection\Configuration
      */
     public function setNode(ArrayNodeDefinition $node) 
     {

@@ -1,23 +1,25 @@
 {
-  "name": "tear/sphinxsearch-bundle",
-  "type": "symfony-bundle",
-  "description": "Sphinx search bundle for Symfony 2",
-  "keywords": ["sphinx", "sphinxsearch", "symfony2"],
-  "homepage": "https://github.com/leonnleite/Tear-SphinxsearchBundle",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Leonn Leite",
-      "email": "leonnleite@gmail.com"
-    }
-  ],
-  "require": {
-    "php": ">=5.3.3"
-  },
-  "autoload": {
-    "psr-0": {
-      "Tear\\SphinxsearchBundle": ""
-    }
-  },
-  "target-dir": "Tear/SphinxsearchBundle"
+    "name": "delocker/sphinxsearch-bundle",
+    "type": "symfony-bundle",
+    "description": "Sphinx search bundle for Symfony 2",
+    "keywords": ["sphinx", "sphinxsearch", "symfony2", "composer"],
+    "homepage": "https://github.com/delocker/SphinxsearchBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Egor Pinkevich",
+            "email": "egor.pinkevich@gmail.com"
+        },
+        {
+            "name": "Ryan Rogers",
+            "email": "ryan@timewasted.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": { "Delocker\\SphinxsearchBundle": "" }
+    },
+    "target-dir": "Delocker/SphinxsearchBundle"
 }

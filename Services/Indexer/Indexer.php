@@ -1,8 +1,8 @@
 <?php
 
-namespace Tear\SphinxsearchBundle\Services\Indexer;
+namespace Delocker\SphinxsearchBundle\Services\Indexer;
 
-use Assetic\Util\ProcessBuilder;
+use \Symfony\Component\Process\ProcessBuilder;
 
 class Indexer
 {
@@ -10,6 +10,11 @@ class Indexer
 	 * @var string $bin
 	 */
 	private $bin;
+
+    /**
+     * @var string $conf
+     */
+    private $conf;
 
 	/**
 	 * @var array $indexes
@@ -35,9 +40,10 @@ class Indexer
 	 * @param string $bin The path to the indexer executable.
 	 * @param array $indexes The list of indexes that can be used.
 	 */
-	public function __construct($bin = '/usr/bin/indexer', array $indexes = array())
+	public function __construct($bin = '/usr/local/sphinx/bin/indexer', $conf = '/usr/local/sphinx/etc/sphinx.conf', array $indexes = array())
 	{
 		$this->bin = $bin;
+        $this->conf = $conf;
 		$this->indexes = $indexes;
 	}
 
@@ -56,11 +62,12 @@ class Indexer
 	 */
 	public function rotate($indexes)
 	{
-		$pb = new ProcessBuilder();
+		$pb = new ProcessBuilder;
 		$pb
 			->inheritEnvironmentVariables()
 			->add($this->bin)
-			->add('--rotate')
+			->add('--rotate', true)
+            ->add('--config' . $this->conf, true)
 		;
 		if( is_array($indexes) ) {
 			foreach( $indexes as &$label ) {

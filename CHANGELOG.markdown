@@ -1,6 +1,81 @@
 Changelog
 =========
 
+v1.2.2
+------
+
+* Added method setGroupBy()
+* Added method setSortMode()
+* Added method setFilterFloatRange()
+* Added method setGeoAnchor()
+* Added indexer "conf" setting
+* Getting sphinx object getSphinx()
+* Changed default bin path for indexer. /usr/local/sphinx/bin/indexer, instead on /usr/bin/indexer
+* Changed default path to config file as /usr/local/sphinx/etc/sphinx.conf
+
+v1.2.1
+------
+
+* Fix the path to `SphinxAPI.php` (really, this time).  It now looks for it at `vendor/delocker/sphinxsearch-bundle/Search/SphinxsearchBundle/Services/Search/SphinxAPI.php`
+
+v1.2.0
+------
+
+* **Backwards compatibility breakage.**
+
+    `Sphinxsearch::search` has been redesigned.  The previous behavior when given multiple indexes was to perform multiple queries, one against each index provided.  Now, only one query will be performed against all indexes provided.  This required a few changes to how the function is called.
+
+    The function definition has changed from this:
+
+    ``` php
+public function search($query, array $indexes, $escapeQuery = true)
+    ```
+
+    to this:
+
+    ``` php
+public function search($query, array $indexes, array $options = array(), $escapeQuery = true)
+    ```
+
+    `$indexes` is now a simple array containing only the index labels that are to be queried.  This means that instead of this:
+
+    ``` php
+$indexesToSearch = array(
+  'Items' => array(
+    'field_weights' => array(
+      'Name' => 5,
+      'SKU' => 10,
+      'Description' => 1,
+    ),
+  ),
+  'Categories' => array(),
+);
+    ```
+
+    you will have this:
+
+    ``` php
+$indexesToSearch = array(
+  'Items',
+  'Categories',
+);
+    ```
+
+    Query options are now passed in via `$options` and are applied on a per-query basis, instead of a per-index basis.  The above example would have an `$options` array of:
+
+    ``` php
+$options = array(
+  'field_weights' => array(
+    'Name' => 5,
+    'SKU' => 10,
+    'Description' => 1,
+  ),
+);
+    ```
+
+* The bundle now looks for `SphinxAPI.php` in `vendor/bundles/Delocker/SphinxsearchBundle/Services/Search/SphinxAPI.php` instead of in `src/Search/SphinxsearchBundle/Services/Search/SphinxAPI.php`
+
+
 v1.1.0
 ------
 

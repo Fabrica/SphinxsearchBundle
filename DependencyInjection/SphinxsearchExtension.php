@@ -1,6 +1,6 @@
 <?php
 
-namespace Tear\SphinxsearchBundle\DependencyInjection;
+namespace Delocker\SphinxsearchBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
@@ -27,6 +27,7 @@ class SphinxsearchExtension extends Extension
 		 */
 		if( isset($config['indexer']) ) {
 			$container->setParameter('search.sphinxsearch.indexer.bin', $config['indexer']['bin']);
+            $container->setParameter('search.sphinxsearch.indexer.conf', $config['indexer']['conf']);
 		}
 
 		/**

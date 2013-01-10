@@ -5,18 +5,19 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="search.sphinxsearch.indexer.class">Tear\SphinxsearchBundle\Services\Indexer\Indexer</parameter>
-        <parameter key="search.sphinxsearch.search.class">Tear\SphinxsearchBundle\Services\Search\Sphinxsearch</parameter>
+        <parameter key="search.sphinxsearch.indexer.class">Delocker\SphinxsearchBundle\Services\Indexer\Indexer</parameter>
+        <parameter key="search.sphinxsearch.search.class">Delocker\SphinxsearchBundle\Services\Search\Sphinxsearch</parameter>
     </parameters>
 
     <services>
         <service id="search.sphinxsearch.indexer" class="%search.sphinxsearch.indexer.class%">
             <argument>%search.sphinxsearch.indexer.bin%</argument>
+            <argument>%search.sphinxsearch.indexer.conf%</argument>
             <argument>%search.sphinxsearch.indexes%</argument>
         </service>
 
         <service id="search.sphinxsearch.search" class="%search.sphinxsearch.search.class%">
-            <file>%search.sphinxsearch.bundlepath%/Services/Search/SphinxAPI.php</file>
+            <file>%kernel.root_dir%/../vendor/delocker/sphinxsearch-bundle/Services/Search/SphinxAPI.php</file>
             <argument>%search.sphinxsearch.searchd.host%</argument>
             <argument>%search.sphinxsearch.searchd.port%</argument>
             <argument>%search.sphinxsearch.searchd.socket%</argument>
