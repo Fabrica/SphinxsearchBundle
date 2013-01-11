@@ -67,19 +67,8 @@ class Sphinxsearch
 	 */
 	public function escapeString($string)
 	{
-		return $this->sphinx->escapeString($string);
+		return $this->sphinx->EscapeString($string);
 	}
-
-    /**
-     * Set group by
-     * @param $attribute
-     * @param $func
-     * @param null $groupsort
-     */
-    public function setGroupBy($attribute, $func, $groupsort = null)
-    {
-        $this->sphinx->SetGroupBy($attribute, $func, $groupsort);
-    }
 
 	/**
 	 * Set the desired match mode.
@@ -92,6 +81,16 @@ class Sphinxsearch
 	}
 
     /**
+     * Set ranking mode
+     * @param $ranker
+     * @param string $rankexpr
+     */
+    public function setRankingMode($ranker, $rankexpr="")
+    {
+        $this->sphinx->SetRankingMode($ranker, $rankexpr);
+    }
+
+    /**
      * Set the desired sort mode
      * @param $mode
      * @param $str
@@ -100,8 +99,37 @@ class Sphinxsearch
         $this->sphinx->setSortMode($mode, $str);
     }
 
+	/**
+	 * Set the desired search filter.
+	 * only match records where $attribute value is in given set
+     *
+	 * @param string $attribute The attribute to filter.
+	 * @param array $values The values to filter.
+	 * @param bool $exclude Is this an exclusion filter?
+	 */
+	public function setFilter($attribute, $values, $exclude = false)
+	{
+		$this->sphinx->setFilter($attribute, $values, $exclude);
+	}
+
+    /**
+     * Set filter range
+     * only match records if $attribute value is beetwen $min and $max (inclusive)
+     *
+     * @param $attribute
+     * @param $min
+     * @param $max
+     * @param bool $exclude
+     */
+    public function setFilterRange($attribute, $min, $max, $exclude=false)
+    {
+        $this->sphinx->SetFilterRange($attribute, $min, $max, $exclude);
+    }
+
     /**
      * Set filter float range
+     * only match records if $attribute value is beetwen $min and $max (inclusive)
+     *
      * @param $attribute
      * @param $min
      * @param $max
@@ -113,6 +141,10 @@ class Sphinxsearch
 
     /**
      * Set geo
+     * setup anchor point for geosphere distance calculations
+     * required to use @geodist in filters and sorting
+     * latitude and longitude must be in radians
+     *
      * @param $attrlat
      * @param $attrlong
      * @param $lat
@@ -122,17 +154,37 @@ class Sphinxsearch
         $this->sphinx->SetGeoAnchor($attrlat, $attrlong, $lat, $long);
     }
 
-	/**
-	 * Set the desired search filter.
-	 *
-	 * @param string $attribute The attribute to filter.
-	 * @param array $values The values to filter.
-	 * @param bool $exclude Is this an exclusion filter?
-	 */
-	public function setFilter($attribute, $values, $exclude = false)
-	{
-		$this->sphinx->setFilter($attribute, $values, $exclude);
-	}
+    /**
+     * Set grouping attribute and function
+     *
+     * @param $attribute
+     * @param $func
+     * @param null $groupsort
+     */
+    public function setGroupBy($attribute, $func, $groupsort = null)
+    {
+        $this->sphinx->SetGroupBy($attribute, $func, $groupsort);
+    }
+
+    /**
+     * Set count-distinct attribute for group-by queries
+     *
+     * @param $attribute
+     */
+    public function setGroupDistinct($attribute)
+    {
+        $this->sphinx->SetGroupDistinct($attribute);
+    }
+
+    /**
+     * Set select-list (attributes or expressions), SQL-like syntax
+     *
+     * @param $select
+     */
+    function setSelect($select)
+    {
+        $this->sphinx->SetSelect($select);
+    }
 
 	/**
 	 * Search for the specified query string.
